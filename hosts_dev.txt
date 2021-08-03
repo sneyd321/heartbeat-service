@@ -1,0 +1,10 @@
+tenant-gateway, host.docker.internal:8079
+homeowner-gateway, host.docker.internal:8080
+homeowner-service, host.docker.internal:8081
+house-service, host.docker.internal:8082
+tenant-service, host.docker.internal:8083
+problem-service, host.docker.internal:8085
+image-upload-service, host.docker.internal:8088
+lease-service, host.docker.internal:8090
+document-service, host.docker.internal:8091
+notification-service, host.docker.internal:8093

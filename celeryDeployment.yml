@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: celery
+  name: celery-beat
 spec:
   selector:
     matchLabels:
-      run: celery
-  replicas: 3
+      run: celery-beat
+  replicas: 1
   template:
     metadata:
       labels:
-        run: celery
+        run: celery-beat
     spec:
       containers:
-      - name: celery
-        image: sneyd321/celery
+      - name: celery-beat
+        image: sneyd321/celery-beat
   
       imagePullSecrets:
         - name: key

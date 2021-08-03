@@ -6,7 +6,7 @@ from server import app, zk
 
 
 
-@app.route("/Service/<string:serviceName>")
+@registrar.route("/Service/<string:serviceName>")
 def get_service(serviceName):
     print(zk.get_children("RoomR/Services/"), flush=True)
     if zk.exists("RoomR/Services/" + serviceName):
@@ -16,7 +16,8 @@ def get_service(serviceName):
     return Response(response="No service found with name: " + serviceName, status=404)
 
 
-@app.route("/")
+
+@registrar.route("/")
 def test():
     print(zk.get_children("RoomR/Services/"), flush=True)
     return Response(response="TEST", status=200)

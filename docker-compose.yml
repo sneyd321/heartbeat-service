@@ -9,10 +9,9 @@ services:
             - ./:/usr/src/app
         restart: on-failure
 
-    celery:
+    celery-beat:
         image: sneyd321/celery-beat 
-        volumes: 
-            - ./:/usr/src/app
+      
      
         restart: on-failure
 
@@ -20,7 +19,7 @@ services:
         image: sneyd321/redis
         ports: 
             - 6379:6379
-          
+      
     zookeeper:
         image: zookeeper:3.4
         ports: 

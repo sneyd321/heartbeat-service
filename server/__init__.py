@@ -1,28 +1,31 @@
 from flask import Flask
-
 from celery import Celery
 from server.api.models import FileParser
-
 from kazoo.client import KazooClient, KazooState
 
-zk = KazooClient(hosts='host.docker.internal:2181')
-zk.start()
-
+zk = KazooClient()
 app = Flask(__name__)
+fp = FileParser("./hosts_dev.txt")
 
 
-#c = Celery("server", broker='redis://redis-service.default.svc.cluster.local:6379', backend='redis://redis-service.default.svc.cluster.local:6379')
-#app.config['CELERY_BROKER_URL'] = 'redis://redis-service.default.svc.cluster.local:6379/2'
-#app.config['CELERY_RESULT_BACKEND'] = 'redis://redis-service.default.svc.cluster.local:6379/2'
 
-app.config['CELERY_BROKER_URL'] = 'redis://host.docker.internal:6379/2'
-#app.config['RESULT_BACKEND'] = 'redis://host.docker.internal:6379/2'
 
-fp = FileParser("./hosts.txt")
-print(fp.getBeatSchedule(), flush=True)
-print(fp.getHostFromFile("host.docker.internal:8090"), flush=True)
 
-def make_celery(app):
+def make_celery(app, env):
+    if env == "prod":
+        zk.set_hosts('zookeeper.default.svc.cluster.local:2181')
+        app.config['CELERY_BROKER_URL'] = 'redis://redis-service.default.svc.cluster.local:6379/2'
+
+    elif env == "dev":
+        zk.set_hosts('host.docker.internal:2181')
+        app.config['CELERY_BROKER_URL'] = 'redis://host.docker.internal:6379/2'
+
+    else:
+        return None
+
+    zk.start()
+
+
     celery = Celery(
         app.import_name,
         #backend=app.config['RESULT_BACKEND'],
@@ -30,6 +33,7 @@ def make_celery(app):
         include=['server.api.tasks']
     )
     celery.conf.update(app.config)
+    celery.control.purge()
 
     class ContextTask(celery.Task):
         def __call__(self, *args, **kwargs):
@@ -46,13 +50,11 @@ def make_celery(app):
 
 def create_app():
     #Intialize modules
+    
     from server.api.routes import registrar
     app.register_blueprint(registrar, url_prefix="/registrar/v1")
+   
     return app
 
+celery = make_celery(app, "prod")
 
-celery = make_celery(app)
-
-
-
-celery.conf.update(app.config)

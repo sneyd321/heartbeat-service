@@ -1,4 +1,4 @@
-from server import celery, zk, fp
+from server import  zk, fp, celery
 import base64, requests
 from celery.utils.log import get_task_logger
 

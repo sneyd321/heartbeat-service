@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: image-upload-service
+  name: registrar-service
 spec:
   selector:
     matchLabels:
-      run: image-upload-service
+      run: registrar-service
   replicas: 1
   template:
     metadata:
       labels:
-        run: image-upload-service
+        run: registrar-service
     spec:
       containers:
-      - name: image-upload-service
-        image: sneyd321/image-upload
+      - name: registrar-service
+        image: sneyd321/registrar-service
         ports:
-        - containerPort: 8088
+        - containerPort: 8089
 
   
         
