@@ -1,5 +1,5 @@
 tenant-gateway, tenant-gateway.default.svc.cluster.local:8079
-homeowner-gateway, homeowner-gateway.default.svc.cluster.local:8080
+homeowner-gateway, 34.107.132.144:80
 homeowner-service, homeowner-service.default.svc.cluster.local:8081
 house-service, house-service.default.svc.cluster.local:8082
 tenant-service, tenant-service.default.svc.cluster.local:8083

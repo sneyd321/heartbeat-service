@@ -5,7 +5,7 @@ from kazoo.client import KazooClient, KazooState
 
 zk = KazooClient()
 app = Flask(__name__)
-fp = FileParser("./hosts_dev.txt")
+fp = FileParser("./hosts.txt")
 
 
 

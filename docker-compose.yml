@@ -1,24 +1,24 @@
 version: '3.5'
 
 services: 
-    registrar-service:
-        image: sneyd321/registrar-service
-        ports: 
-            - 8089:8089
-        volumes: 
-            - ./:/usr/src/app
-        restart: on-failure
+    # registrar-service:
+    #     image: sneyd321/registrar-service
+    #     ports: 
+    #         - 8089:8089
+    #     volumes: 
+    #         - ./:/usr/src/app
+    #     restart: on-failure
 
-    celery-beat:
-        image: sneyd321/celery-beat 
+    # celery-beat:
+    #     image: sneyd321/celery-beat 
       
      
-        restart: on-failure
+    #     restart: on-failure
 
-    redis:
-        image: sneyd321/redis
-        ports: 
-            - 6379:6379
+    # redis:
+    #     image: sneyd321/redis
+    #     ports: 
+    #         - 6379:6379
       
     zookeeper:
         image: zookeeper:3.4
